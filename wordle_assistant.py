@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 from src.word_importer import import_word_list
 from src.scoring import word_scores
