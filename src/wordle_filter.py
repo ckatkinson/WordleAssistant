@@ -1,5 +1,12 @@
+"""
+This defines the function that does most of the work for the Wordle Assistant. filter_from_word_info
+filters the word_list according to a guessed 'word' and the 'colors' reported by the Wordle app to give
+the remaining possiblities for the answer. 
+"""
 
-def filter_from_word_info(word, colors, word_list):
+from typing import List
+
+def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[str]:
     """
     Returns the remaining possible words if Wordle tells us that word has
     colors

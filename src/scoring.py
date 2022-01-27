@@ -1,9 +1,9 @@
-
+from typing import List, Dict, Tuple
 from src.word_importer import import_word_list
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-def letter_frequency(word_list):
+def letter_frequency(word_list: List[str]) -> List[str]:
     """
     Returns a dict associating to each letter in alphabet the number of occurrences
     of that letter in word_list.
@@ -14,7 +14,7 @@ def letter_frequency(word_list):
             letter_dict[let]+=1
     return letter_dict
 
-def letter_relative_frequency(word_list):
+def letter_relative_frequency(word_list: List[str]) -> Dict[str, float]:
     """
     Divides frequency by the number of letters in the entire list
     """
@@ -26,7 +26,7 @@ def letter_relative_frequency(word_list):
             letter_dict[letter] = letter_dict[letter]/(5 * len(word_list))
     return letter_dict
 
-def word_scores(word_list):
+def word_scores(word_list: List[str]) -> List[Tuple[str, float]]:
     """
     Associates a score to each word in the word list. Score is calculated by
     summing the letter frequencies divided by the number of occurrences of the
