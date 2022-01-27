@@ -37,7 +37,8 @@ class WordleData():
 
 def collect_data(list_of_targets: List[str]=import_word_list()) -> WordleData:
     """
-    Simulate a game for every target in list_of_targets and collect stats on wins/losses and attempts. On my computer, runs in about 80 seconds on the full list. No reason to cut it down.
+    Simulate a game for every target in list_of_targets and collect stats on wins/losses and attempts. 
+    On my computer, runs in about 80 seconds on the full list. No reason to cut it down.
     """
     data = WordleData()
     word_list = list_of_targets
