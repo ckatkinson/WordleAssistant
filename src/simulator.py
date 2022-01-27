@@ -7,6 +7,7 @@ from scoring import word_scores
 from word_importer import import_word_list
 from wordle_filter import filter_from_word_info
 
+
 def color_string(guess: str, target: str) -> str:
     """
     Returns Wordle colors for guess given target.
@@ -14,23 +15,27 @@ def color_string(guess: str, target: str) -> str:
     c_string = ""
     for pos, letter in enumerate(guess):
         if target[pos] == letter:
-            c_string += 'g'
+            c_string += "g"
         elif letter in target:
-            c_string += 'y'
+            c_string += "y"
         else:
-            c_string += 'b'
+            c_string += "b"
     return c_string
 
-class WordleGame():
+
+class WordleGame:
     """
     Holds state of a Wordle game.
     """
-    def __init__(self, 
-                 target: str, 
-                 num_attempts: int=0,
-                 guesses_made: List[str]=[],
-                 colors_seen: List[str]=[],
-                 word_list: List[str]=import_word_list()) -> None:
+
+    def __init__(
+        self,
+        target: str,
+        num_attempts: int = 0,
+        guesses_made: List[str] = [],
+        colors_seen: List[str] = [],
+        word_list: List[str] = import_word_list(),
+    ) -> None:
         self.target = target
         self.num_attempts = num_attempts
         self.guesses_made = guesses_made
@@ -46,40 +51,39 @@ class WordleGame():
         Target is: {self.target}
         """
         return rep
-    
+
     def make_guess(self, guess):
         colors = color_string(guess, self.target)
         self.guesses_made.append(guess)
         self.colors_seen.append(colors)
         self.num_attempts += 1
 
+
 def simulate_game(game: WordleGame) -> None:
     """
     Uses our scoring based guesser to play through a wordle game.
     """
-    #we'll modify working_word_list as we guess. Iterator for speed.
+    # we'll modify working_word_list as we guess. Iterator for speed.
     working_word_list = (w for w, _ in word_scores(game.word_list))
-    #while (len(game.colors_seen) == 0) or (game.colors_seen[-1] != 'ggggg'):
+    # while (len(game.colors_seen) == 0) or (game.colors_seen[-1] != 'ggggg'):
     while True:
-        try:    
-            best_word = next(working_word_list) 
-            #somethings not right in some edge case here. I'll just skip the round when it #happens. 
+        try:
+            best_word = next(working_word_list)
+            # somethings not right in some edge case here. I'll just skip the round when it #happens.
             best_word
 
-            #Play wordle with guess:
+            # Play wordle with guess:
             game.make_guess(best_word)
 
-            #Last colors seen:
+            # Last colors seen:
             last_colors = game.colors_seen[-1]
-            if last_colors == 'ggggg':
+            if last_colors == "ggggg":
                 break
 
-            #filter working list
-            filtered_wl = filter_from_word_info( best_word, last_colors,  working_word_list)
+            # filter working list
+            filtered_wl = filter_from_word_info(
+                best_word, last_colors, working_word_list
+            )
             working_word_list = (w for w, _ in word_scores(filtered_wl))
         except StopIteration:
             break
-   
-
-
-    

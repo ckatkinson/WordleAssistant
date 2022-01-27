@@ -1,18 +1,22 @@
 from typing import List, Dict, Tuple
 from word_importer import import_word_list
 
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
+alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-def letter_frequency(word_list: List[str]) -> Dict[str,float]:
+
+def letter_frequency(word_list: List[str]) -> Dict[str, float]:
     """
     Returns a dict associating to each letter in alphabet the number of occurrences
     of that letter in word_list.
     """
-    letter_dict = { letter : 0.0 for letter in alphabet} # 0.0 fixes type error when doing relative freq in next function
+    letter_dict = {
+        letter: 0.0 for letter in alphabet
+    }  # 0.0 fixes type error when doing relative freq in next function
     for word in word_list:
         for let in word:
-            letter_dict[let]+=1
+            letter_dict[let] += 1
     return letter_dict
+
 
 def letter_relative_frequency(word_list: List[str]) -> Dict[str, float]:
     """
@@ -21,11 +25,12 @@ def letter_relative_frequency(word_list: List[str]) -> Dict[str, float]:
     letter_dict = letter_frequency(word_list)
     for letter in alphabet:
         if len(word_list) == 0:
-            #raise RuntimeError("Guess/color combination incompatible with word list")
+            # raise RuntimeError("Guess/color combination incompatible with word list")
             letter_dict[letter] = 0
         else:
-            letter_dict[letter] = letter_dict[letter]/(5 * len(word_list))
+            letter_dict[letter] = letter_dict[letter] / (5 * len(word_list))
     return letter_dict
+
 
 def word_scores(word_list: List[str]) -> List[Tuple[str, float]]:
     """
@@ -38,6 +43,6 @@ def word_scores(word_list: List[str]) -> List[Tuple[str, float]]:
     letter_freq = letter_relative_frequency(word_list)
     scores = []
     for word in word_list:
-        score = sum([letter_freq[letter]/(word.count(letter)) for letter in word])
+        score = sum([letter_freq[letter] / (word.count(letter)) for letter in word])
         scores.append((word, score))
-    return sorted(scores, key=lambda p : p[1], reverse=True)
+    return sorted(scores, key=lambda p: p[1], reverse=True)
