@@ -1,5 +1,5 @@
 from typing import List, Dict, Tuple
-from src.word_importer import import_word_list
+from word_importer import import_word_list
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -21,7 +21,8 @@ def letter_relative_frequency(word_list: List[str]) -> Dict[str, float]:
     letter_dict = letter_frequency(word_list)
     for letter in alphabet:
         if len(word_list) == 0:
-            raise RuntimeError("Guess/color combination incompatible with word list")
+            #raise RuntimeError("Guess/color combination incompatible with word list")
+            letter_dict[letter] = 0
         else:
             letter_dict[letter] = letter_dict[letter]/(5 * len(word_list))
     return letter_dict
