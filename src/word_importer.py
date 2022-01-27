@@ -4,9 +4,7 @@ sgb-words.txt is from here:
 https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt
 """
 
-from typing import TextIO, List
-
-def import_word_list(file: TextIO ='./sgb-words.txt') -> List[str]:
+def import_word_list(file='./sgb-words.txt'):
     """
     Import the dictionary of 5-letter words. Returns a list
     """

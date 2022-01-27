@@ -3,12 +3,12 @@ from src.word_importer import import_word_list
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-def letter_frequency(word_list: List[str]) -> List[str]:
+def letter_frequency(word_list: List[str]) -> Dict[str,float]:
     """
     Returns a dict associating to each letter in alphabet the number of occurrences
     of that letter in word_list.
     """
-    letter_dict = { letter : 0 for letter in alphabet}
+    letter_dict = { letter : 0.0 for letter in alphabet} # 0.0 fixes type error when doing relative freq in next function
     for word in word_list:
         for let in word:
             letter_dict[let]+=1
