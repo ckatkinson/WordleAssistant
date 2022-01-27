@@ -18,24 +18,28 @@ class WordleAssistant():
     def suggestions(self, number: int=10) -> List[str]:
         return [w for w, _ in self.scored_words[:number]]
    
-#This is the 'interactive' part of the program. Is this a good idea? Probably not, but I'm still learning.
+#This is the 'interactive' part of the program. Is this (ie the while loop) a good idea? Probably not, but I'm still learning.
 #Initial suggestions:
-wl = import_word_list()
-scored = word_scores(wl)
-print("\nHere are some suggested guesses: ")
-print([w for w, _ in scored[:10]])
-
-w = WordleAssistant()
-print(w.suggestions())
-# loop until we're done
-while True:
-    cont = input("Would you like to keep going ([y]/n)? ")
-    if cont=='n':
-        break
-    
-    w = WordleAssistant(filter_from_word_info(w.guess, w.color, w.word_list))
-    
+def main():
+    wl = import_word_list()
+    scored = word_scores(wl)
     print("\nHere are some suggested guesses: ")
+    print([w for w, _ in scored[:10]])
+
+    w = WordleAssistant()
     print(w.suggestions())
+    # loop until we're done
+    while True:
+        cont = input("Would you like to keep going ([y]/n)? ")
+        if cont=='n':
+            break
+        
+        w = WordleAssistant(filter_from_word_info(w.guess, w.color, w.word_list))
+        
+        print("\nHere are some suggested guesses: ")
+        print(w.suggestions())
+
+if __name__ == "__main__":
+    main()  
     
     
