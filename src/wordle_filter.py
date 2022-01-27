@@ -46,8 +46,9 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
         elif color == 'y':
                        
             yellow_positions = [ p for ((p, l), c) in word_info if (l == letter) and (c == 'y')]
+            num_yell = len(yellow_positions)
 
-            y_mask = lambda x: (all([x[p] != letter for p in yellow_positions])) and (letter in x)
+            y_mask = lambda x: (all([x[p] != letter for p in yellow_positions])) and (x.count(letter) >= num_yell)
             word_list = list(filter(y_mask, word_list))
            
         else:
