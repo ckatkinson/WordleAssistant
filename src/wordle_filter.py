@@ -15,6 +15,7 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
     word_info = list(zip(enumerate(word), colors))
 
     for (position, letter), color in word_info:
+
         if color == "b":
 
             """
@@ -37,13 +38,12 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
                 x[position] != letter
             )
 
-            word_list = list(filter(b_mask, word_list))
-            pass
+            word_list = [x for x in word_list if b_mask(x)]
 
         elif color == "g":
 
             g_mask = lambda x: x[position] == letter
-            word_list = list(filter(g_mask, word_list))
+            word_list = [x for x in word_list if g_mask(x)]
 
         elif color == "y":
 
@@ -55,7 +55,7 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
             y_mask = lambda x: (all([x[p] != letter for p in yellow_positions])) and (
                 x.count(letter) >= num_yell
             )
-            word_list = list(filter(y_mask, word_list))
+            word_list = [x for x in word_list if y_mask(x)]
 
         else:
             raise RuntimeError(

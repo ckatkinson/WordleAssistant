@@ -2,7 +2,7 @@
 
 from typing import List
 from src.word_importer import import_word_list
-from src.scoring import word_scores
+from src.scoring import word_scores_letter_freq
 from src.wordle_filter import filter_from_word_info
 
 
@@ -17,7 +17,7 @@ class WordleAssistant:
             "Input the colors given back by wordle (for example bygyy): \n"
         ).strip(" '\"")
         self.word_list = filter_from_word_info(self.guess, self.color, word_list)
-        self.scored_words = word_scores(self.word_list)
+        self.scored_words = word_scores_letter_freq(self.word_list)
 
     def suggestions(self, number: int = 10) -> List[str]:
         return [w for w, _ in self.scored_words[:number]]
@@ -27,7 +27,7 @@ class WordleAssistant:
 # Initial suggestions:
 def main():
     wl = import_word_list()
-    scored = word_scores(wl)
+    scored = word_scores_letter_freq(wl)
     print("\nHere are some suggested guesses: ")
     print([w for w, _ in scored[:10]])
 
