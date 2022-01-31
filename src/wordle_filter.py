@@ -14,8 +14,9 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
     """
     word_info = list(zip(enumerate(word), colors))
 
-    for (position, letter), color in word_info:
+    mask_list = []  # to deal with infinite recursion...
 
+    for (position, letter), color in word_info:
         if color == "b":
 
             """
@@ -34,16 +35,18 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
             letter_count = word.count(letter)
 
             num_not_black = letter_count - len(black_letters)
-            b_mask = lambda x: (x.count(letter) == num_not_black) and (
-                x[position] != letter
-            )
 
-            word_list = [x for x in word_list if b_mask(x)]
+            def b_mask(x, letter=letter, position=position):
+                return (x.count(letter) == num_not_black) and (x[position] != letter)
+
+            mask_list.append(b_mask)
 
         elif color == "g":
 
-            g_mask = lambda x: x[position] == letter
-            word_list = [x for x in word_list if g_mask(x)]
+            def g_mask(x, position=position, letter=letter):
+                return x[position] == letter
+
+            mask_list.append(g_mask)
 
         elif color == "y":
 
@@ -52,14 +55,18 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
             ]
             num_yell = len(yellow_positions)
 
-            y_mask = lambda x: (all([x[p] != letter for p in yellow_positions])) and (
-                x.count(letter) >= num_yell
-            )
-            word_list = [x for x in word_list if y_mask(x)]
+            def y_mask(x, letter=letter, position=position):
+                return (all([x[p] != letter for p in yellow_positions])) and (
+                    x.count(letter) >= num_yell
+                )
+
+            mask_list.append(y_mask)
 
         else:
             raise RuntimeError(
                 f"Color must be one of 'b', 'g', or 'y'. Color was '{color}'."
             )
 
-    return list(word_list)
+    mask = lambda x: all([m(x) for m in mask_list])
+
+    return [x for x in word_list if mask(x)]
