@@ -5,6 +5,7 @@ the remaining possiblities for the answer.
 """
 
 from typing import List
+import numpy as np
 
 
 def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[str]:
@@ -68,5 +69,6 @@ def filter_from_word_info(word: str, colors: str, word_list: List[str]) -> List[
             )
 
     mask = lambda x: all([m(x) for m in mask_list])
-
+    # arr = np.array(word_list)
     return [x for x in word_list if mask(x)]
+    # return list(arr[mask(arr)])
